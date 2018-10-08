@@ -30,7 +30,7 @@
       </MenuBar>
    </top>
    <center>
-      <VBox fx:id="vBox" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <TableView fx:id="table" prefHeight="600.0" prefWidth="1000.0">
                <columns>

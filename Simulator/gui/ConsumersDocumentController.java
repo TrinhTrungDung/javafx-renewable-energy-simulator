@@ -2,9 +2,11 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import interfaces.AbstractComponent;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,14 +24,28 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import vgu.consumer.ConsumerFactory;
+import vgu.control.Control;
 
 public class ConsumersDocumentController implements Initializable {
 	
 	private ObservableList<AbstractComponent> consumers = null;
+	private Control control;
 	
 	public void setData(ObservableList<AbstractComponent> consumers) {
 		this.consumers = consumers;
 		table.getItems().addAll(this.consumers);
+	}
+	
+	public void addConsumers(List<AbstractComponent> consumers) {
+		consumers.forEach(consumer -> this.control.addConsumer(consumer));
+	}
+	
+	public void addGenerators(List<AbstractComponent> generators) {
+		generators.forEach(generator -> this.control.addGenerator(generator));
+	}
+	
+	public Control getControl() {
+		return this.control;
 	}
 	
 	@FXML
@@ -37,9 +53,6 @@ public class ConsumersDocumentController implements Initializable {
 	
 	@FXML
 	private TableView<AbstractComponent> table;
-	
-	@FXML
-	private VBox vBox;
 	
 	@FXML
 	private TableColumn<AbstractComponent, String> nameColumn;
@@ -78,7 +91,10 @@ public class ConsumersDocumentController implements Initializable {
 	
 	@FXML
     void onConsumersViewClicked(ActionEvent event) throws IOException {
-		Parent consumersViewParent = FXMLLoader.load(getClass().getResource("ConsumersDocument.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsumersDocument.fxml"));
+    	Parent consumersViewParent = loader.load();
+    	ConsumersDocumentController controller = loader.getController();
+    	controller.setData(this.consumers);
 		Scene consumersViewScene = new Scene(consumersViewParent);
 		
 		Stage stage = (Stage) menuBar.getScene().getWindow();
@@ -89,7 +105,17 @@ public class ConsumersDocumentController implements Initializable {
 
     @FXML
     void onGeneratorsViewClicked(ActionEvent event) throws IOException {
-    	Parent generatorsViewParent = FXMLLoader.load(getClass().getResource("GeneratorsDocument.fxml"));
+    	FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("MainDocument.fxml"));
+    	MainDocumentController mainController = mainLoader.getController();
+    	
+    	System.out.println(mainController);
+    	ObservableList<AbstractComponent> observableGenerators = FXCollections.observableArrayList(mainController.getControl().getGenerators());
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("GeneratorsDocument.fxml"));
+    	Parent generatorsViewParent = loader.load();
+    	GeneratorsDocumentController generatorController = loader.getController();
+    	
+    	generatorController.setData(observableGenerators);
 		Scene generatorsViewScene = new Scene(generatorsViewParent);
 		
 		Stage stage = (Stage) menuBar.getScene().getWindow();

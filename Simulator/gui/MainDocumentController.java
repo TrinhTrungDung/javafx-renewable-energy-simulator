@@ -24,15 +24,7 @@ import vgu.generator.GeneratorFactory;
 
 public class MainDocumentController implements Initializable {
 	
-	private Control control = new Control();;
-	
-	public void addConsumers(List<AbstractComponent> consumers) {
-		consumers.forEach(consumer -> this.control.addConsumer(consumer));
-	}
-	
-	public void addGenerators(List<AbstractComponent> generators) {
-		generators.forEach(generator -> this.control.addGenerator(generator));
-	}
+	private Control control;
 	
 	@FXML
 	private MenuBar menuBar;
@@ -62,7 +54,12 @@ public class MainDocumentController implements Initializable {
 	
 	@FXML
     void onConsumersViewClicked(ActionEvent event) throws IOException {
-		Parent consumersViewParent = FXMLLoader.load(getClass().getResource("ConsumersDocument.fxml"));
+		ObservableList<AbstractComponent> observableConsumers = FXCollections.observableArrayList(control.getConsumers());
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsumersDocument.fxml"));
+    	Parent consumersViewParent = loader.load();
+    	ConsumersDocumentController controller = loader.getController();
+    	controller.setData(observableConsumers);
 		Scene consumersViewScene = new Scene(consumersViewParent);
 		
 		Stage stage = (Stage) menuBar.getScene().getWindow();
@@ -73,7 +70,12 @@ public class MainDocumentController implements Initializable {
 
     @FXML
     void onGeneratorsViewClicked(ActionEvent event) throws IOException {
-    	Parent generatorsViewParent = FXMLLoader.load(getClass().getResource("GeneratorsDocument.fxml"));
+    	ObservableList<AbstractComponent> observableGenerators = FXCollections.observableArrayList(control.getGenerators());
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("GeneratorsDocument.fxml"));
+    	Parent generatorsViewParent = loader.load();
+    	GeneratorsDocumentController controller = loader.getController();
+    	controller.setData(observableGenerators);
 		Scene generatorsViewScene = new Scene(generatorsViewParent);
 		
 		Stage stage = (Stage) menuBar.getScene().getWindow();
@@ -131,7 +133,19 @@ public class MainDocumentController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+		control = new Control();
+	}
+	
+	public void addConsumers(List<AbstractComponent> consumers) {
+		consumers.forEach(consumer -> this.control.addConsumer(consumer));
+	}
+	
+	public void addGenerators(List<AbstractComponent> generators) {
+		generators.forEach(generator -> this.control.addGenerator(generator));
+	}
+	
+	public Control getControl() {
+		return this.control;
 	}
 
 }
