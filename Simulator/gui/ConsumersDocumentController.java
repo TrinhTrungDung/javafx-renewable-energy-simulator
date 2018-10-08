@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import interfaces.AbstractComponent;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,7 +19,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import vgu.consumer.ConsumerFactory;
@@ -28,25 +26,7 @@ import vgu.control.Control;
 
 public class ConsumersDocumentController implements Initializable {
 	
-	private ObservableList<AbstractComponent> consumers = null;
 	private Control control;
-	
-	public void setData(ObservableList<AbstractComponent> consumers) {
-		this.consumers = consumers;
-		table.getItems().addAll(this.consumers);
-	}
-	
-	public void addConsumers(List<AbstractComponent> consumers) {
-		consumers.forEach(consumer -> this.control.addConsumer(consumer));
-	}
-	
-	public void addGenerators(List<AbstractComponent> generators) {
-		generators.forEach(generator -> this.control.addGenerator(generator));
-	}
-	
-	public Control getControl() {
-		return this.control;
-	}
 	
 	@FXML
 	private MenuBar menuBar;
@@ -91,10 +71,7 @@ public class ConsumersDocumentController implements Initializable {
 	
 	@FXML
     void onConsumersViewClicked(ActionEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsumersDocument.fxml"));
-    	Parent consumersViewParent = loader.load();
-    	ConsumersDocumentController controller = loader.getController();
-    	controller.setData(this.consumers);
+		Parent consumersViewParent = FXMLLoader.load(getClass().getResource("ConsumersDocument.fxml"));
 		Scene consumersViewScene = new Scene(consumersViewParent);
 		
 		Stage stage = (Stage) menuBar.getScene().getWindow();
@@ -105,17 +82,7 @@ public class ConsumersDocumentController implements Initializable {
 
     @FXML
     void onGeneratorsViewClicked(ActionEvent event) throws IOException {
-    	FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("MainDocument.fxml"));
-    	MainDocumentController mainController = mainLoader.getController();
-    	
-    	System.out.println(mainController);
-    	ObservableList<AbstractComponent> observableGenerators = FXCollections.observableArrayList(mainController.getControl().getGenerators());
-		
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("GeneratorsDocument.fxml"));
-    	Parent generatorsViewParent = loader.load();
-    	GeneratorsDocumentController generatorController = loader.getController();
-    	
-    	generatorController.setData(observableGenerators);
+    	Parent generatorsViewParent = FXMLLoader.load(getClass().getResource("GeneratorsDocument.fxml"));
 		Scene generatorsViewScene = new Scene(generatorsViewParent);
 		
 		Stage stage = (Stage) menuBar.getScene().getWindow();
@@ -156,12 +123,12 @@ public class ConsumersDocumentController implements Initializable {
     
     @FXML
     public void onSaveButtonClicked(ActionEvent event) throws IOException {
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("MainDocument.fxml"));
-    	Parent mainParent = loader.load();
-    	MainDocumentController controller = loader.getController();
-    	controller.addConsumers(table.getItems());
+    	Parent mainParent = FXMLLoader.load(getClass().getResource("MainDocument.fxml"));
+    	
+    	DataUtils.addConsumers(control, table.getItems());
+    	DataUtils.generateConsumers(control);
+    	
 		Scene mainScene = new Scene(mainParent);
-		
 		Stage stage = (Stage) menuBar.getScene().getWindow();
 		stage.setScene(mainScene);
 		stage.setTitle("");
@@ -170,6 +137,15 @@ public class ConsumersDocumentController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		control = new Control();
+		
+		try {
+			List<AbstractComponent> consumers = DataUtils.getConsumersFromCSV("consumers.csv");
+			table.getItems().addAll(consumers);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		if (numOfConsumers != null) {
 			numOfConsumers.setText("Total: " + table.getItems().size());
 		}

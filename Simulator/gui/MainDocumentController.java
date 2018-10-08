@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import interfaces.AbstractComponent;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -54,14 +52,10 @@ public class MainDocumentController implements Initializable {
 	
 	@FXML
     void onConsumersViewClicked(ActionEvent event) throws IOException {
-		ObservableList<AbstractComponent> observableConsumers = FXCollections.observableArrayList(control.getConsumers());
-		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsumersDocument.fxml"));
     	Parent consumersViewParent = loader.load();
-    	ConsumersDocumentController controller = loader.getController();
-    	controller.setData(observableConsumers);
+    	
 		Scene consumersViewScene = new Scene(consumersViewParent);
-		
 		Stage stage = (Stage) menuBar.getScene().getWindow();
 		stage.setScene(consumersViewScene);
 		stage.setTitle("Consumers");
@@ -70,14 +64,10 @@ public class MainDocumentController implements Initializable {
 
     @FXML
     void onGeneratorsViewClicked(ActionEvent event) throws IOException {
-    	ObservableList<AbstractComponent> observableGenerators = FXCollections.observableArrayList(control.getGenerators());
-		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("GeneratorsDocument.fxml"));
     	Parent generatorsViewParent = loader.load();
-    	GeneratorsDocumentController controller = loader.getController();
-    	controller.setData(observableGenerators);
+    	
 		Scene generatorsViewScene = new Scene(generatorsViewParent);
-		
 		Stage stage = (Stage) menuBar.getScene().getWindow();
 		stage.setScene(generatorsViewScene);
 		stage.setTitle("Generators");
@@ -91,12 +81,11 @@ public class MainDocumentController implements Initializable {
     	Integer std = Integer.parseInt(consumerStd.getText());
     	
     	List<AbstractComponent> consumers = ConsumerFactory.generate(amount, avgPower, std);
-    	ObservableList<AbstractComponent> observableConsumers = FXCollections.observableArrayList(consumers);
+    	DataUtils.addConsumers(control, consumers);
+    	DataUtils.generateConsumers(control);
     	
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsumersDocument.fxml"));
     	Parent consumersViewParent = loader.load();
-    	ConsumersDocumentController controller = loader.getController();
-    	controller.setData(observableConsumers);
 		Scene consumersViewScene = new Scene(consumersViewParent);
 		
 		Stage stage = (Stage) menuBar.getScene().getWindow();
@@ -112,12 +101,11 @@ public class MainDocumentController implements Initializable {
     	Double startPower = Double.parseDouble(generatorStartPower.getText());
     	
     	List<AbstractComponent> generators = GeneratorFactory.generate(amount, totalPower, startPower);
-    	ObservableList<AbstractComponent> observableGenerators = FXCollections.observableArrayList(generators);
+    	DataUtils.addGenerators(control, generators);
+    	DataUtils.generateGenerators(control);
     	
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("GeneratorsDocument.fxml"));
     	Parent generatorsViewParent = loader.load();
-    	GeneratorsDocumentController controller = loader.getController();
-    	controller.setData(observableGenerators);
 		Scene generatorsViewScene = new Scene(generatorsViewParent);
 		
 		Stage stage = (Stage) menuBar.getScene().getWindow();
@@ -136,15 +124,7 @@ public class MainDocumentController implements Initializable {
 		control = new Control();
 	}
 	
-	public void addConsumers(List<AbstractComponent> consumers) {
-		consumers.forEach(consumer -> this.control.addConsumer(consumer));
-	}
-	
-	public void addGenerators(List<AbstractComponent> generators) {
-		generators.forEach(generator -> this.control.addGenerator(generator));
-	}
-	
-	public Control getControl() {
+	public Control getData() {
 		return this.control;
 	}
 

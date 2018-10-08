@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import interfaces.AbstractComponent;
@@ -22,15 +23,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import vgu.consumer.ConsumerFactory;
+import vgu.control.Control;
 
 public class GeneratorsDocumentController implements Initializable {
 	
-	private ObservableList<AbstractComponent> generators = null;
-	
-	public void setData(ObservableList<AbstractComponent> generators) {
-		this.generators = generators;
-		table.getItems().addAll(this.generators);
-	}
+	private Control control;
 	
 	@FXML
 	private MenuBar menuBar;
@@ -131,12 +128,12 @@ public class GeneratorsDocumentController implements Initializable {
     
     @FXML
     public void onSaveButtonClicked(ActionEvent event) throws IOException {
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("MainDocument.fxml"));
-    	Parent mainParent = loader.load();
-    	MainDocumentController controller = loader.getController();
-    	controller.addGenerators(table.getItems());
+    	Parent mainParent = FXMLLoader.load(getClass().getResource("MainDocument.fxml"));
+    	
+    	DataUtils.addGenerators(control, table.getItems());
+    	DataUtils.generateGenerators(control);
+    	
 		Scene mainScene = new Scene(mainParent);
-		
 		Stage stage = (Stage) menuBar.getScene().getWindow();
 		stage.setScene(mainScene);
 		stage.setTitle("");
@@ -145,6 +142,15 @@ public class GeneratorsDocumentController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		control = new Control();
+		
+		try {
+			List<AbstractComponent> generators = DataUtils.getGeneratorsFromCSV("generators.csv");
+			table.getItems().addAll(generators);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		if (numOfGenerators != null) {
 			numOfGenerators.setText("Total: " + table.getItems().size());
 		}

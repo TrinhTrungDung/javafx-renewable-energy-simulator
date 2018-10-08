@@ -2,26 +2,13 @@ package gui;
 
 import interfaces.AbstractComponent;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import vgu.consumer.ConsumerFactory;
 
 /**
  * GUI requirements:
@@ -47,7 +34,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-    	
     	Parent root = FXMLLoader.load(getClass().getResource("MainDocument.fxml"));
     	
     	Scene scene = new Scene(root);
@@ -126,61 +112,6 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-    }
-    
-    public void saveMenuItemClicked() {
-    	
-    }
-    
-    public void exitMenuItemClicked() {
-    	
-    }
-    
-    public void onConsumersViewClicked() {
-    	Scene scene = new Scene(layout);
-    	window.setTitle("Consumers");
-    	window.setScene(scene);
-    	window.show();
-    }
-    
-    public void onGeneratorsViewClicked() {
-    	
-    }
-    
-    private void setup() {
-    	// Menu creation part
-    	// Save menu item
-    	MenuItem saveItem = new MenuItem("_Save");
-    	saveItem.setOnAction(e -> saveMenuItemClicked());
-    	saveItem.setAccelerator(KeyCombination.keyCombination("CTRL+S"));
-    	
-    	// Exit menu item
-    	MenuItem exitItem = new MenuItem("Exit");
-    	exitItem.setOnAction(e -> exitMenuItemClicked());
-    	
-    	// File menu
-    	Menu fileMenu = new Menu("_File");
-    	fileMenu.getItems().addAll(saveItem, exitItem);
-    	fileMenu.setAccelerator(KeyCombination.keyCombination("ALT+F"));
-    	
-    	// Consumers view menu item
-    	MenuItem consumersView = new MenuItem("Consumers");
-    	consumersView.setOnAction(e -> onConsumersViewClicked());
-    	
-    	// Generators view menu item
-    	MenuItem generatorsView = new MenuItem("Generators");
-    	generatorsView.setOnAction(e -> onGeneratorsViewClicked());
-    	
-    	// View menu
-    	Menu viewMenu = new Menu("_View");
-    	viewMenu.getItems().addAll(consumersView, generatorsView);
-    	
-    	// Main menu bar
-    	MenuBar menuBar = new MenuBar();
-    	menuBar.getMenus().addAll(fileMenu, viewMenu);
-    	
-    	layout = new BorderPane();
-    	layout.setTop(menuBar);
     }
     
 }
