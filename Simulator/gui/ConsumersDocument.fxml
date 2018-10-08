@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ConsumersDocumentController">
+   <top>
+      <MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
+         <menus>
+            <Menu mnemonicParsing="false" text="_File">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="_Save" />
+                  <MenuItem mnemonicParsing="false" text="Exit" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="_View">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onConsumersViewClicked" text="Consumers" />
+                  <MenuItem mnemonicParsing="false" onAction="#onGeneratorsViewClicked" text="Generators" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <VBox fx:id="vBox" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="table" prefHeight="600.0" prefWidth="1000.0">
+               <columns>
+                  <TableColumn fx:id="nameColumn" maxWidth="300.0" minWidth="200.0" prefWidth="200.0" text="Name">
+                  	<cellValueFactory>
+                  		<PropertyValueFactory property="name" />
+                  	</cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="maxPowerColumn" maxWidth="300.0" minWidth="200.0" prefWidth="200.0" text="Max Power">
+                  	<cellValueFactory>
+                  		<PropertyValueFactory property="maxPower" />
+                  	</cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="minPowerColumn" maxWidth="300.0" minWidth="200.0" prefWidth="200.0" text="Min Power">
+                  	<cellValueFactory>
+                  		<PropertyValueFactory property="minPower" />
+                  	</cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="maxChangeColumn" maxWidth="300.0" minWidth="200.0" prefWidth="200.0" text="Max Change">
+                  	<cellValueFactory>
+                  		<PropertyValueFactory property="maxChange" />
+                  	</cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="minChangeColumn" maxWidth="300.0" minWidth="200.0" prefWidth="200.0" text="Min Change">
+                  	<cellValueFactory>
+                  		<PropertyValueFactory property="minChange" />
+                  	</cellValueFactory>
+                  </TableColumn>
+               </columns>
+            </TableView>
+            <HBox fx:id="hBox" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <TextField fx:id="nameInput" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="100.0" promptText="Name" />
+                  <TextField fx:id="maxPowerInput" minHeight="-Infinity" minWidth="-Infinity" prefWidth="100.0" promptText="Max Power" />
+                  <TextField fx:id="minPowerInput" minHeight="-Infinity" minWidth="-Infinity" prefWidth="100.0" promptText="Min Power" />
+                  <TextField fx:id="maxChangeInput" minHeight="-Infinity" minWidth="-Infinity" prefWidth="100.0" promptText="Max Change" />
+                  <TextField fx:id="minChangeInput" minHeight="-Infinity" minWidth="-Infinity" prefWidth="100.0" promptText="Min Change" />
+                  <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAddConsumerClicked" text="Add" />
+                  <Button fx:id="deleteButton" layoutX="755.0" layoutY="10.0" mnemonicParsing="false" onAction="#onDeleteConsumerClicked" text="Delete" />
+                  <Button fx:id="saveButton" layoutX="863.0" layoutY="20.0" mnemonicParsing="false" onAction="#onSaveButtonClicked" text="Save" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+   	<Text fx:id="numOfConsumers" />
+   </bottom>
+</BorderPane>

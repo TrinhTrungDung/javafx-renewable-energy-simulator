@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.input.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainDocumentController">
+   <children>
+      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0">
+         <top>
+            <MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
+              <menus>
+                <Menu mnemonicParsing="false" text="_File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="_Save" />
+                    <MenuItem mnemonicParsing="false" text="Exit" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="_View">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onConsumersViewClicked" text="Consumers" />
+                        <MenuItem mnemonicParsing="false" onAction="#onGeneratorsViewClicked" text="Generators" />
+                     </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </top>
+         <bottom>
+            <Button fx:id="resultButton" mnemonicParsing="false" onAction="#onResultButtonClicked" text="Result" BorderPane.alignment="CENTER" />
+         </bottom>
+         <center>
+            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox>
+                     <children>
+                        <Label text="Consumer" />
+                        <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity">
+                           <children>
+                              <Label text="Size:" />
+                              <TextField fx:id="consumerSize" promptText="Size" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0">
+                           <children>
+                              <Label text="Average Power:" />
+                              <TextField fx:id="consumerAvgPower" promptText="Average" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="10.0" layoutY="98.0">
+                           <children>
+                              <Label text="Standard Deviation:" />
+                              <TextField fx:id="consumerStd" />
+                           </children>
+                        </HBox>
+                        <Button fx:id="submitConsumer" mnemonicParsing="false" onAction="#onSubmitConsumerClicked" text="Submit" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="10.0" layoutY="10.0">
+                     <children>
+                        <Label text="Generator" />
+                        <HBox>
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="110.0" text="Size:" />
+                              <TextField fx:id="generatorSize" promptText="Size" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="10.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="110.0" text="Total Power:" />
+                              <TextField fx:id="generatorTotalPower" promptText="Total" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="98.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="110.0" text="Start Power:" />
+                              <TextField fx:id="generatorStartPower" promptText="Power" />
+                           </children>
+                        </HBox>
+                        <Button fx:id="submitGenerator" mnemonicParsing="false" onAction="#onSubmitGeneratorClicked" text="Submit" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
