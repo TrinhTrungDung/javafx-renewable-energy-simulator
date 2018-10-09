@@ -12,17 +12,14 @@ import javafx.stage.Stage;
 
 /**
  * GUI requirements:
- * - MUST be capable to control current the iteration (not yet)
- * - MUST be capable to show current demand, supply and frequency (not yet)
+ * - MUST be capable to control current the iteration (done)
+ * - MUST be capable to show current demand, supply and frequency (done)
  * - MUST be capable to show the number of consumer and generators (done)
  * - MUST be capable to show current weather and electricity price (not yet)
- * - MUST be capable to show name and power of individual consumer or generator (not yet)
+ * - MUST be capable to show name and power of individual consumer or generator (add more power column)
  * @author DungTrinhTrung
  *
  */
-//TODO control current the iteration
-//TODO show current demand, supply and frequency
-//TODO show the number of consumer and generators
 //TODO show current weather and electricity price
 //TODO show name and power of individual consumer or generator
 public class Main extends Application {

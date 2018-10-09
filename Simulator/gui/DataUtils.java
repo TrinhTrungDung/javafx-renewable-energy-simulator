@@ -22,10 +22,10 @@ import vgu.generator.GeneratorFactory;
 
 public class DataUtils {
 	
-	public static void generateConsumers(Control control) throws FileNotFoundException {
+	public static void generateConsumers(List<AbstractComponent> consumers) throws FileNotFoundException {
 		PrintWriter writer = new PrintWriter(new FileOutputStream("consumers.csv", false));
 		
-		for (AbstractComponent consumer : control.getConsumers()) {
+		for (AbstractComponent consumer : consumers) {
 			writer.print(((Consumer) consumer).getName());
 			writer.print(",");
 			writer.print(consumer.getMaxPower());
@@ -41,10 +41,10 @@ public class DataUtils {
 		writer.close();
 	}
 	
-	public static void generateGenerators(Control control) throws FileNotFoundException {
+	public static void generateGenerators(List<AbstractComponent> generators) throws FileNotFoundException {
 		PrintWriter writer = new PrintWriter(new FileOutputStream("generators.csv", false));
 		
-		for (AbstractComponent generator : control.getGenerators()) {
+		for (AbstractComponent generator : generators) {
 			writer.print(((Generator) generator).getName());
 			writer.print(",");
 			writer.print(generator.getMaxPower());

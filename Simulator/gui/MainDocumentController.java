@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import vgu.consumer.ConsumerFactory;
 import vgu.control.Control;
@@ -82,7 +83,7 @@ public class MainDocumentController implements Initializable {
     	
     	List<AbstractComponent> consumers = ConsumerFactory.generate(amount, avgPower, std);
     	DataUtils.addConsumers(control, consumers);
-    	DataUtils.generateConsumers(control);
+    	DataUtils.generateConsumers(control.getConsumers());
     	
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsumersDocument.fxml"));
     	Parent consumersViewParent = loader.load();
@@ -102,7 +103,7 @@ public class MainDocumentController implements Initializable {
     	
     	List<AbstractComponent> generators = GeneratorFactory.generate(amount, totalPower, startPower);
     	DataUtils.addGenerators(control, generators);
-    	DataUtils.generateGenerators(control);
+    	DataUtils.generateGenerators(control.getGenerators());
     	
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("GeneratorsDocument.fxml"));
     	Parent generatorsViewParent = loader.load();
@@ -116,7 +117,16 @@ public class MainDocumentController implements Initializable {
     
     @FXML
     public void onResultButtonClicked(ActionEvent event) throws IOException {
-    	StatisticsDialog.display("Result", control);
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("StatisticsDocument.fxml"));
+    	Parent statisticsViewParent = loader.load();
+		Scene statisticsViewScene = new Scene(statisticsViewParent);
+		
+		Stage stage = new Stage();
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.setScene(statisticsViewScene);
+		stage.setTitle("Statistics");
+		stage.showAndWait();
+//    	StatisticsDialog.display("Result", control);
     }
 
 	@Override

@@ -23,11 +23,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import vgu.consumer.ConsumerFactory;
-import vgu.control.Control;
 
 public class GeneratorsDocumentController implements Initializable {
-	
-	private Control control;
 	
 	@FXML
 	private MenuBar menuBar;
@@ -130,8 +127,7 @@ public class GeneratorsDocumentController implements Initializable {
     public void onSaveButtonClicked(ActionEvent event) throws IOException {
     	Parent mainParent = FXMLLoader.load(getClass().getResource("MainDocument.fxml"));
     	
-    	DataUtils.addGenerators(control, table.getItems());
-    	DataUtils.generateGenerators(control);
+    	DataUtils.generateGenerators(table.getItems());
     	
 		Scene mainScene = new Scene(mainParent);
 		Stage stage = (Stage) menuBar.getScene().getWindow();
@@ -142,8 +138,6 @@ public class GeneratorsDocumentController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		control = new Control();
-		
 		try {
 			List<AbstractComponent> generators = DataUtils.getGeneratorsFromCSV("generators.csv");
 			table.getItems().addAll(generators);

@@ -22,11 +22,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import vgu.consumer.ConsumerFactory;
-import vgu.control.Control;
 
 public class ConsumersDocumentController implements Initializable {
-	
-	private Control control;
 	
 	@FXML
 	private MenuBar menuBar;
@@ -125,8 +122,7 @@ public class ConsumersDocumentController implements Initializable {
     public void onSaveButtonClicked(ActionEvent event) throws IOException {
     	Parent mainParent = FXMLLoader.load(getClass().getResource("MainDocument.fxml"));
     	
-    	DataUtils.addConsumers(control, table.getItems());
-    	DataUtils.generateConsumers(control);
+    	DataUtils.generateConsumers(table.getItems());
     	
 		Scene mainScene = new Scene(mainParent);
 		Stage stage = (Stage) menuBar.getScene().getWindow();
@@ -137,8 +133,6 @@ public class ConsumersDocumentController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		control = new Control();
-		
 		try {
 			List<AbstractComponent> consumers = DataUtils.getConsumersFromCSV("consumers.csv");
 			table.getItems().addAll(consumers);

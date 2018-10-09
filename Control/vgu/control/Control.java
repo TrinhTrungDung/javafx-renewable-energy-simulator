@@ -118,6 +118,10 @@ public class Control implements IControl {
 		
 		double frequencyChange = 10.0 - (Math.min(totalDemand, totalSupply) * 10 / Math.max(totalDemand, totalSupply));
 		
+		if (totalDemand == 0 && totalSupply == 0) {
+			return 0;
+		}
+		
 		if (totalDemand > totalSupply) {
 			return 50 - frequencyChange;
 		} else if (totalDemand < totalSupply) {
