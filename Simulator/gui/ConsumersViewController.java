@@ -19,21 +19,17 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import vgu.consumer.ConsumerFactory;
 
-public class GeneratorsDocumentController implements Initializable {
+public class ConsumersViewController implements Initializable {
 	
 	@FXML
 	private MenuBar menuBar;
 	
 	@FXML
 	private TableView<AbstractComponent> table;
-	
-	@FXML
-	private VBox vBox;
 	
 	@FXML
 	private TableColumn<AbstractComponent, String> nameColumn;
@@ -68,11 +64,11 @@ public class GeneratorsDocumentController implements Initializable {
 	private Button saveButton;
 	
 	@FXML
-	private Text numOfGenerators;
+	private Text numOfConsumers;
 	
 	@FXML
     void onConsumersViewClicked(ActionEvent event) throws IOException {
-		Parent consumersViewParent = FXMLLoader.load(getClass().getResource("ConsumersDocument.fxml"));
+		Parent consumersViewParent = FXMLLoader.load(getClass().getResource("ConsumersView.fxml"));
 		Scene consumersViewScene = new Scene(consumersViewParent);
 		
 		Stage stage = (Stage) menuBar.getScene().getWindow();
@@ -83,7 +79,7 @@ public class GeneratorsDocumentController implements Initializable {
 
     @FXML
     void onGeneratorsViewClicked(ActionEvent event) throws IOException {
-    	Parent generatorsViewParent = FXMLLoader.load(getClass().getResource("GeneratorsDocument.fxml"));
+    	Parent generatorsViewParent = FXMLLoader.load(getClass().getResource("GeneratorsView.fxml"));
 		Scene generatorsViewScene = new Scene(generatorsViewParent);
 		
 		Stage stage = (Stage) menuBar.getScene().getWindow();
@@ -109,7 +105,7 @@ public class GeneratorsDocumentController implements Initializable {
     	maxChangeInput.clear();
     	minChangeInput.clear();
     	
-    	numOfGenerators.setText("Total: " + table.getItems().size());
+    	numOfConsumers.setText("Total: " + table.getItems().size());
     }
     
     @FXML
@@ -119,15 +115,14 @@ public class GeneratorsDocumentController implements Initializable {
     	selectedComponents = table.getSelectionModel().getSelectedItems();
     	
     	selectedComponents.forEach(allComponents::remove);
-    	
-    	numOfGenerators.setText("Total: " + table.getItems().size());
+    	numOfConsumers.setText("Total: " + table.getItems().size());
     }
     
     @FXML
     public void onSaveButtonClicked(ActionEvent event) throws IOException {
-    	Parent mainParent = FXMLLoader.load(getClass().getResource("MainDocument.fxml"));
+    	Parent mainParent = FXMLLoader.load(getClass().getResource("MainView.fxml"));
     	
-    	DataUtils.generateGenerators(table.getItems());
+    	DataUtils.generateConsumers(table.getItems());
     	
 		Scene mainScene = new Scene(mainParent);
 		Stage stage = (Stage) menuBar.getScene().getWindow();
@@ -139,15 +134,15 @@ public class GeneratorsDocumentController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
-			List<AbstractComponent> generators = DataUtils.getGeneratorsFromCSV("generators.csv");
-			table.getItems().addAll(generators);
+			List<AbstractComponent> consumers = DataUtils.getConsumersFromCSV("consumers.csv");
+			table.getItems().addAll(consumers);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		if (numOfGenerators != null) {
-			numOfGenerators.setText("Total: " + table.getItems().size());
+		if (numOfConsumers != null) {
+			numOfConsumers.setText("Total: " + table.getItems().size());
 		}
 	}
-
+	
 }

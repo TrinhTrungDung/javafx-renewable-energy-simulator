@@ -21,7 +21,7 @@ import vgu.consumer.ConsumerFactory;
 import vgu.control.Control;
 import vgu.generator.GeneratorFactory;
 
-public class MainDocumentController implements Initializable {
+public class MainViewController implements Initializable {
 	
 	private Control control;
 	
@@ -53,7 +53,7 @@ public class MainDocumentController implements Initializable {
 	
 	@FXML
     void onConsumersViewClicked(ActionEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsumersDocument.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsumersView.fxml"));
     	Parent consumersViewParent = loader.load();
     	
 		Scene consumersViewScene = new Scene(consumersViewParent);
@@ -65,7 +65,7 @@ public class MainDocumentController implements Initializable {
 
     @FXML
     void onGeneratorsViewClicked(ActionEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("GeneratorsDocument.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("GeneratorsView.fxml"));
     	Parent generatorsViewParent = loader.load();
     	
 		Scene generatorsViewScene = new Scene(generatorsViewParent);
@@ -85,7 +85,7 @@ public class MainDocumentController implements Initializable {
     	DataUtils.addConsumers(control, consumers);
     	DataUtils.generateConsumers(control.getConsumers());
     	
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsumersDocument.fxml"));
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsumersView.fxml"));
     	Parent consumersViewParent = loader.load();
 		Scene consumersViewScene = new Scene(consumersViewParent);
 		
@@ -105,7 +105,7 @@ public class MainDocumentController implements Initializable {
     	DataUtils.addGenerators(control, generators);
     	DataUtils.generateGenerators(control.getGenerators());
     	
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("GeneratorsDocument.fxml"));
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("GeneratorsView.fxml"));
     	Parent generatorsViewParent = loader.load();
 		Scene generatorsViewScene = new Scene(generatorsViewParent);
 		
@@ -117,7 +117,7 @@ public class MainDocumentController implements Initializable {
     
     @FXML
     public void onResultButtonClicked(ActionEvent event) throws IOException {
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("StatisticsDocument.fxml"));
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("StatisticsView.fxml"));
     	Parent statisticsViewParent = loader.load();
 		Scene statisticsViewScene = new Scene(statisticsViewParent);
 		
@@ -126,16 +126,11 @@ public class MainDocumentController implements Initializable {
 		stage.setScene(statisticsViewScene);
 		stage.setTitle("Statistics");
 		stage.showAndWait();
-//    	StatisticsDialog.display("Result", control);
     }
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		control = new Control();
-	}
-	
-	public Control getData() {
-		return this.control;
 	}
 
 }

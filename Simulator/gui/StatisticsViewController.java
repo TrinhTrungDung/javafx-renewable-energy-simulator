@@ -8,12 +8,17 @@ import java.util.ResourceBundle;
 import interfaces.AbstractComponent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import vgu.control.Control;
 
-public class StatisticsDocumentController implements Initializable {
+public class StatisticsViewController implements Initializable {
 	
 	private Control control;
 	
@@ -57,15 +62,29 @@ public class StatisticsDocumentController implements Initializable {
 	}
 	
 	@FXML
-	void onShowChartButtonClicked(ActionEvent event) {
+	void onShowChartButtonClicked(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ChartView.fxml"));
+    	Parent chartParent = loader.load();
+		Scene chartScene = new Scene(chartParent);
 		
+		Stage stage = new Stage();
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.setScene(chartScene);
+		stage.setTitle("");
+		stage.showAndWait();
 	}
 	
 	private void updateUI() {
+		System.out.println(control.getConsumers().size());
+		System.out.println(control.getGenerators().size());
 		currentIteration.setText(String.valueOf(iteration));
 		currentDemand.setText(String.valueOf(control.getTotalDemand()));
 		currentSupply.setText(String.valueOf(control.getTotalSupply()));
 		currentFrequency.setText(String.valueOf(control.getFrequency()));
+	}
+	
+	public static int getIteration() {
+		return iteration;
 	}
 
 }

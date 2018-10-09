@@ -13,6 +13,8 @@ import java.util.List;
 
 import interfaces.AbstractComponent;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.TableView;
 import vgu.consumer.Consumer;
 import vgu.consumer.ConsumerFactory;
@@ -110,6 +112,21 @@ public class DataUtils {
 		Double minChange = Double.parseDouble(metadata[4]);
 		
 		return GeneratorFactory.generate(name, maxPower, minPower, maxChange, minChange);
+	}
+	
+	public static ObservableList<XYChart.Series<Number, Number>> getFrequencyChartSeries(int iteration, Control control) {
+		XYChart.Series<Number, Number> frequencySeries = new XYChart.Series<Number, Number>();
+		
+		for (int i = 1; i <= iteration; i++) {
+			frequencySeries.getData().add(new XYChart.Data<>(i, control.getFrequency()));
+			control.nextIteration();
+		}
+		
+		ObservableList<XYChart.Series<Number, Number>> observableData = 
+				FXCollections.<XYChart.Series<Number, Number>>observableArrayList();
+		observableData.add(frequencySeries);
+		
+		return observableData;
 	}
 	
 	public static void addConsumers(Control control, List<AbstractComponent> consumers) {

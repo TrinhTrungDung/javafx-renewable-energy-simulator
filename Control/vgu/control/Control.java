@@ -162,7 +162,7 @@ public class Control implements IControl {
 	    double availableChange = 0.0D;
 	    
 	    for (int i = 0; i < generators.size(); i++) {
-	      AbstractComponent g = (AbstractComponent)generators.get(i);
+	      AbstractComponent g = generators.get(i);
 	      
 	      if (diff > 0.0D) {
 	        availableChange = Math.min(g.getMaxChange(), g.getPower() - g.getMinPower());
