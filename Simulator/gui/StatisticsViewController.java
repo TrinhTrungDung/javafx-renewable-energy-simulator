@@ -107,7 +107,11 @@ public class StatisticsViewController implements Initializable {
 		return new Scene(chartParent);
 	}
 	
-	public static int getIteration() {
+	public static void resetIteration() {
+		iteration = 1;
+	}
+	
+	public int getIteration() {
 		return iteration;
 	}
 

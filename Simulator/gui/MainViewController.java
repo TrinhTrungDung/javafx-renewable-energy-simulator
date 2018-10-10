@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import interfaces.AbstractComponent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,6 +18,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import vgu.consumer.ConsumerFactory;
 import vgu.control.Control;
 import vgu.generator.GeneratorFactory;
@@ -123,6 +125,12 @@ public class MainViewController implements Initializable {
 		
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent event) {
+				StatisticsViewController.resetIteration();
+			}
+		});
 		stage.setScene(statisticsViewScene);
 		stage.setTitle("Statistics");
 		stage.showAndWait();

@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import interfaces.AbstractComponent;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -40,12 +41,22 @@ public class DemandSupplyChartController implements Initializable {
 		
 		List<String> iterationList = new ArrayList<>();
 		
-		for (int i = 1; i <= StatisticsViewController.getIteration(); i++) {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("StatisticsView.fxml"));
+		try {
+			loader.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		StatisticsViewController controller = loader.getController();
+		System.out.println(controller.getIteration());
+		
+		for (int i = 1; i <= controller.getIteration(); i++) {
 			iterationList.add(String.valueOf(i));
 		}
 		
 		iterationDemandSupplyAxis.setCategories(FXCollections.<String>observableArrayList(iterationList));
-		chart.getData().addAll(DataUtils.getDemandSupplyChartSeries(StatisticsViewController.getIteration(), control));
+		chart.getData().addAll(DataUtils.getDemandSupplyChartSeries(controller.getIteration(), control));
 	}
 	
 }
