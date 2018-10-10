@@ -34,6 +34,10 @@ public class StatisticsViewController implements Initializable {
 	private Text currentSupply;
 	@FXML
 	private Text currentFrequency;
+	@FXML
+	private Text currentCost;
+	@FXML
+	private Text currentProfit;
 	
 	@FXML
 	private Button nextButton;
@@ -81,6 +85,9 @@ public class StatisticsViewController implements Initializable {
 				case "Demand-Supply":
 					chartScene = loadChart("DemandSupplyChartView.fxml");
 					break;
+				case "Cost-Profit":
+					chartScene = loadChart("CostProfitChartView.fxml");
+					break;
 				default:
 					break;
 			}
@@ -98,6 +105,8 @@ public class StatisticsViewController implements Initializable {
 		currentDemand.setText(String.valueOf(control.getTotalDemand()));
 		currentSupply.setText(String.valueOf(control.getTotalSupply()));
 		currentFrequency.setText(String.valueOf(control.getFrequency()));
+		currentCost.setText(String.valueOf(control.getCost()));
+		currentProfit.setText(String.valueOf(control.getProfit()));
 	}
 	
 	private Scene loadChart(String chartFileName) throws IOException {
@@ -111,7 +120,7 @@ public class StatisticsViewController implements Initializable {
 		iteration = 1;
 	}
 	
-	public int getIteration() {
+	public static int getIteration() {
 		return iteration;
 	}
 

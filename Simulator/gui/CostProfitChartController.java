@@ -15,15 +15,15 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import vgu.control.Control;
 
-public class DemandSupplyChartController implements Initializable {
+public class CostProfitChartController implements Initializable {
 	
 	@FXML
-	private BarChart<String, Number> demandSupplyChart;
+	private BarChart<String, Number> costProfitChart;
 	
 	@FXML
-	private CategoryAxis iterationDemandSupplyAxis;
+	private CategoryAxis iterationCostProfitAxis;
 	@FXML
-	private NumberAxis powerAxis;
+	private NumberAxis moneyAxis;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -45,8 +45,8 @@ public class DemandSupplyChartController implements Initializable {
 			iterationList.add(String.valueOf(i));
 		}
 		
-		iterationDemandSupplyAxis.setCategories(FXCollections.<String>observableArrayList(iterationList));
-		demandSupplyChart.getData().addAll(DataUtils.getDemandSupplyChartSeries(iteration, control));
+		iterationCostProfitAxis.setCategories(FXCollections.<String>observableArrayList(iterationList));
+		costProfitChart.getData().addAll(DataUtils.getCostProfitChartSeries(iteration, control));
 	}
 	
 }

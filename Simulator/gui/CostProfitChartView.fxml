@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CostProfitChartController">
+   <children>
+      <BarChart fx:id="costProfitChart">
+        <xAxis>
+          <CategoryAxis fx:id="iterationCostProfitAxis" label="Iteration" side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="moneyAxis" label="Euro" side="LEFT" />
+        </yAxis>
+      </BarChart>
+   </children>
+</AnchorPane>

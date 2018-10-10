@@ -148,6 +148,25 @@ public class DataUtils {
 		return demandSupplySeries;
 	}
 	
+	public static List<XYChart.Series<String, Number>> getCostProfitChartSeries(int iteration, Control control) {
+		List<XYChart.Series<String, Number>> costProfitSeries = new ArrayList<>();
+		XYChart.Series<String, Number> costSeries = new XYChart.Series<>();
+		XYChart.Series<String, Number> profitSeries = new XYChart.Series<>();
+		costSeries.setName("Cost");
+		profitSeries.setName("Profit");
+		
+		for (int i = 1; i <= iteration; i++) {
+			costSeries.getData().add(new XYChart.Data<>(String.valueOf(i), control.getCost()));
+			profitSeries.getData().add(new XYChart.Data<>(String.valueOf(i), control.getProfit()));
+			control.nextIteration();
+		}
+		
+		costProfitSeries.add(costSeries);
+		costProfitSeries.add(profitSeries);
+		
+		return costProfitSeries;
+	}
+	
 	public static void addConsumers(Control control, List<AbstractComponent> consumers) {
 		consumers.forEach(consumer -> control.addConsumer(consumer));
 	}
