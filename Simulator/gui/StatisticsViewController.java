@@ -13,6 +13,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -35,6 +37,10 @@ public class StatisticsViewController implements Initializable {
 	
 	@FXML
 	private Button nextButton;
+	
+	@FXML
+	private ToggleGroup group;
+	
 	@FXML
 	private Button showChartButton;
 	
@@ -63,9 +69,22 @@ public class StatisticsViewController implements Initializable {
 	
 	@FXML
 	void onShowChartButtonClicked(ActionEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("ChartView.fxml"));
-    	Parent chartParent = loader.load();
-		Scene chartScene = new Scene(chartParent);
+		Scene chartScene = null;
+		
+		if (group.getSelectedToggle() != null) {
+			RadioButton selectedButton = (RadioButton) group.getSelectedToggle();
+			
+			switch (selectedButton.getText()) {
+				case "Frequency":
+					chartScene = loadChart("FrequencyChartView.fxml");
+					break;
+				case "Demand-Supply":
+					chartScene = loadChart("DemandSupplyChartView.fxml");
+					break;
+				default:
+					break;
+			}
+		}
 		
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
@@ -75,12 +94,17 @@ public class StatisticsViewController implements Initializable {
 	}
 	
 	private void updateUI() {
-		System.out.println(control.getConsumers().size());
-		System.out.println(control.getGenerators().size());
 		currentIteration.setText(String.valueOf(iteration));
 		currentDemand.setText(String.valueOf(control.getTotalDemand()));
 		currentSupply.setText(String.valueOf(control.getTotalSupply()));
 		currentFrequency.setText(String.valueOf(control.getFrequency()));
+	}
+	
+	private Scene loadChart(String chartFileName) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(chartFileName));
+		Parent chartParent = loader.load();
+		
+		return new Scene(chartParent);
 	}
 	
 	public static int getIteration() {

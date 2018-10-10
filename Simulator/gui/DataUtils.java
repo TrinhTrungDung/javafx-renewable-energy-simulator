@@ -129,6 +129,25 @@ public class DataUtils {
 		return observableData;
 	}
 	
+	public static List<XYChart.Series<String, Number>> getDemandSupplyChartSeries(int iteration, Control control) {
+		List<XYChart.Series<String, Number>> demandSupplySeries = new ArrayList<>();
+		XYChart.Series<String, Number> demandSeries = new XYChart.Series<>();
+		XYChart.Series<String, Number> supplySeries = new XYChart.Series<>();
+		demandSeries.setName("Demand");
+		supplySeries.setName("Supply");
+		
+		for (int i = 1; i <= iteration; i++) {
+			demandSeries.getData().add(new XYChart.Data<>(String.valueOf(i), control.getTotalDemand()));
+			supplySeries.getData().add(new XYChart.Data<>(String.valueOf(i), control.getTotalSupply()));
+			control.nextIteration();
+		}
+		
+		demandSupplySeries.add(demandSeries);
+		demandSupplySeries.add(supplySeries);
+		
+		return demandSupplySeries;
+	}
+	
 	public static void addConsumers(Control control, List<AbstractComponent> consumers) {
 		consumers.forEach(consumer -> control.addConsumer(consumer));
 	}

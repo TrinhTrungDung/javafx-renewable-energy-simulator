@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DemandSupplyChartController">
+   <children>
+      <BarChart fx:id="chart" legendSide="RIGHT">
+        <xAxis>
+          <CategoryAxis fx:id="iterationDemandSupplyAxis" label="Iteration" side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="powerAxis" label="Power" side="LEFT" />
+        </yAxis>
+      </BarChart>
+   </children>
+</AnchorPane>
