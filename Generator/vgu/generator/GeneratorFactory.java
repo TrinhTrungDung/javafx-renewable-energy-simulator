@@ -39,7 +39,7 @@ public class GeneratorFactory {
 		generators.add(generator);
 			
 		for (int i = 2; i <= amount; i++) {
-			generator = new Generator("generator_" + String.valueOf(i), avgPower, 0, avgPower / 2, avgPower / 2);
+			generator = new Generator("generator_" + String.valueOf(i), avgPower, 0, avgPower / 2, avgPower * 0.275);
 			if (power > avgPower * 0.5) {
 				generator.setPower(avgPower * 0.5);
 				power -= avgPower * 0.5;
