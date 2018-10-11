@@ -1,4 +1,5 @@
 package vgu.generator;
+
 import java.util.ArrayList;
 
 import interfaces.AbstractComponent;
@@ -31,36 +32,19 @@ public class GeneratorFactory {
 	public static ArrayList<AbstractComponent> generate(int amount, double totalPower, double startPower) {
 		ArrayList<AbstractComponent> generators = new ArrayList<>();
 		double power = startPower;
+		double avgPower = totalPower / amount;
+		AbstractComponent generator;
 		
-		if (amount > 4) {
-			double maxGeneratedPower = totalPower / 4;
-			double minGenratedPower = totalPower / (2 * (amount - 2));
-			AbstractComponent generator = new Generator("generator_1", maxGeneratedPower, 0, maxGeneratedPower / 2, maxGeneratedPower / 2);
+		generator = new Generator("generator_1", avgPower, 0, avgPower, 0);
+		generators.add(generator);
 			
-			if (power > maxGeneratedPower / 2) {
-				generator.setPower(maxGeneratedPower / 2);
-				power -= maxGeneratedPower / 2;
+		for (int i = 2; i <= amount; i++) {
+			generator = new Generator("generator_" + String.valueOf(i), avgPower, 0, avgPower / 2, avgPower / 2);
+			if (power > avgPower * 0.5) {
+				generator.setPower(avgPower * 0.5);
+				power -= avgPower * 0.5;
 			}
 			generators.add(generator);
-			for (int i = 0; i < amount - 2; i++) {
-				generator = new Generator("generator_" + String.valueOf(i + 2), minGenratedPower, minGenratedPower / 10,
-						minGenratedPower * 0.75, minGenratedPower / 10);
-				if (power > minGenratedPower * 0.75) {
-					generator.setPower(minGenratedPower * 0.75);
-					power -= minGenratedPower * 0.75;
-				}
-				generators.add(generator);
-			}
-		} else {
-			double avgPower = totalPower / amount;
-			for (int i = 0; i < amount; i++) {
-				AbstractComponent generator = new Generator("generator_" + String.valueOf(i + 1), avgPower, 0, avgPower, avgPower);
-				if (power > avgPower) {
-					generator.setPower(avgPower);
-					power -= avgPower;
-				}
-				generators.add(generator);
-			}
 		}
 		
 		return generators;

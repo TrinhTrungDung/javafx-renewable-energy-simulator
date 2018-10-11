@@ -117,6 +117,4 @@ public class Generator extends AbstractComponent {
 		return price.calculatePrice();
 	}
 	
-	
-	
 }
