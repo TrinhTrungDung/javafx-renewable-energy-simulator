@@ -204,7 +204,7 @@ class UnitTest {
 		control.nextIteration();
 		//double f2 = control.getFrequency();
 		int count2 = control.getGenerators().size();
-		assertEquals(85, count2);
+		assertEquals(90, count2);
 		
 		control.nextIteration();
 		//double f3 = control.getFrequency();

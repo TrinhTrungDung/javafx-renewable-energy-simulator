@@ -16,7 +16,7 @@ import vgu.generator.Generator;
  * - MUST be able register an arbitrary number of generators and consumers. (done)
  * - MUST be able to unregister each component. (done)
  * - MUST compute the total demand every iteration. (done, need improving)
- * - MUST compute the total cost every iteration. (not yet)
+ * - MUST compute the total cost every iteration. (done)
  * - MUST compute the mains frequency every iteration. (done)
  *	(50Hz minus the difference of demand-supply, whereas 10% equals 1Hz)
  * - MUST unregister 10% Generators, if mains frequency > 51Hz (overload) (done)
@@ -29,8 +29,6 @@ import vgu.generator.Generator;
  * @author DungTrinhTrung
  *
  */
-//TODO Improve computing the total demand every iteration.
-//TODO compute the total cost every iteration.
 //TODO request state changes in consumers for demand side management.
 //TODO request supply and state changes in generators for demand side management.
 //TODO request to start or shutdown generators for demand side management.
@@ -118,7 +116,7 @@ public class Control implements IControl {
 		
 		double frequencyChange = 10.0 - (Math.min(totalDemand, totalSupply) * 10 / Math.max(totalDemand, totalSupply));
 		
-		if (totalDemand == 0 && totalSupply == 0) {
+		if (totalDemand == 0 && totalSupply == 0 || isDefect()) {
 			return 0;
 		}
 		
@@ -155,53 +153,37 @@ public class Control implements IControl {
 
 	@Override
 	public void nextIteration() {
-		double demand = getTotalDemand();
-	    double onePercent = demand / 100.0D;
-	    double supply = getTotalSupply();
-	    double diff = supply - demand;
-	    double availableChange = 0.0D;
+	    double diff = getTotalSupply() - getTotalDemand();
+	    double powerChange = 0;
 	    
 	    for (int i = 0; i < generators.size(); i++) {
-	      AbstractComponent g = generators.get(i);
-	      
-	      if (diff > 0.0D) {
-	        availableChange = Math.min(g.getMaxChange(), g.getPower() - g.getMinPower());
-	        if (diff > availableChange) {
-	          g.setPower(g.getPower() - availableChange);
-	          diff -= availableChange;
-	          if (diff < onePercent) {
-	            break;
-	          }
-	        }
-	        else {
-	          availableChange = Math.max(diff, g.getMinChange());
-	          if (availableChange <= Math.abs(diff * 2.0D)) {
-	            g.setPower(g.getPower() - availableChange);
-	            diff -= availableChange;
-	            if (diff < onePercent) {
-	              break;
-	            }
-	          }
-	        }
-	      }
-	      if (diff < 0.0D) {
-	        availableChange = Math.min(g.getMaxChange(), g.getMaxPower() - g.getPower());
-	        if (Math.abs(diff) > availableChange) {
-	          g.setPower(g.getPower() + availableChange);
-	          diff += availableChange;
-	        }
-	        else {
-	          availableChange = Math.max(Math.abs(diff), g.getMinChange());
-	          
-	          if (availableChange <= Math.abs(diff * 1.5D)) {
-	            g.setPower(g.getPower() + availableChange);
-	            diff += availableChange;
-	            if (Math.abs(diff) < onePercent) {
-	              break;
-	            }
-	          }
-	        }
-	      }
+	    	AbstractComponent generator = generators.get(i);
+	    	
+	    	if (diff > 0) {
+	    		powerChange = Math.min(generator.getMaxChange(), generator.getPower() - generator.getMinPower());
+	    		if (Math.abs(diff) >= powerChange) {
+	    			generator.setPower(generator.getPower() - powerChange);
+	    			diff -= powerChange;
+	    		} else {
+	    			powerChange = Math.max(Math.abs(diff), generator.getMinChange());
+	    			if (Math.abs(diff) >= powerChange) {
+		    			generator.setPower(generator.getPower() - powerChange);
+		    			diff -= powerChange;
+		    		}
+	    		}
+	    	} else if (diff < 0) {
+	    		powerChange = Math.min(generator.getMaxChange(), generator.getMaxPower() - generator.getPower());
+	    		if (Math.abs(diff) >= powerChange) {
+	    			generator.setPower(generator.getPower() + powerChange);
+	    			diff += powerChange;
+	    		} else {
+	    			powerChange = Math.max(Math.abs(diff), generator.getMinChange());
+	    			if (Math.abs(diff) >= powerChange) {
+	    				generator.setPower(generator.getPower() + powerChange);
+	    				diff += powerChange;
+	    			}
+	    		}
+	    	}
 	    }
 		
 		frequencyBalancer(getFrequency());
@@ -231,12 +213,12 @@ public class Control implements IControl {
 		if (isOverload(frequency)) {
 			overload += 1;
 			blackout = 0;
-			unregisterComponents = (int) Math.ceil(generators.size() * 0.15);
+			unregisterComponents = (int) Math.ceil(generators.size() * 0.1);
 			generators.subList(0, unregisterComponents).clear();
 		} else if (isBlackout(frequency)) {
 			blackout += 1;
 			overload = 0;
-			unregisterComponents = (int) Math.ceil(consumers.size() * 0.1);
+			unregisterComponents = (int) Math.ceil(consumers.size() * 0.15);
 			consumers.subList(0, unregisterComponents).clear();
 		} else {
 			overload = 0;

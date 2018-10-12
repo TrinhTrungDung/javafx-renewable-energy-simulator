@@ -48,11 +48,12 @@ public class ConsumerFactory {
 	public static ArrayList<AbstractComponent> generate(int amount, int avgPower, int std) {
 		Random random = new Random();
 		ArrayList<AbstractComponent> consumers = new ArrayList<>();
+		double power;
 		
 		for (int i = 0; i < amount; i++) {
 			// Calculate the power based on normally distribution
-			double distributedPower = random.nextGaussian() * std + avgPower;
-			consumers.add(new Consumer("consumer_" + String.valueOf(i + 1), distributedPower, 0, distributedPower, 0, run));
+			power = random.nextGaussian() * std + avgPower;
+			consumers.add(new Consumer("consumer_" + String.valueOf(i + 1), power, 0, power, 0, run));
 		}
 		
 		return consumers;
