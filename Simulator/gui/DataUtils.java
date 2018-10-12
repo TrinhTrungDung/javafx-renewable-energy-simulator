@@ -116,6 +116,7 @@ public class DataUtils {
 	
 	public static ObservableList<XYChart.Series<Number, Number>> getFrequencyChartSeries(int iteration, Control control) {
 		XYChart.Series<Number, Number> frequencySeries = new XYChart.Series<Number, Number>();
+		frequencySeries.setName("Frequency");
 		
 		for (int i = 1; i <= iteration; i++) {
 			frequencySeries.getData().add(new XYChart.Data<>(i, control.getFrequency()));

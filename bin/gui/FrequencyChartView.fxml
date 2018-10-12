@@ -7,12 +7,12 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FrequencyChartController">
    <children>
-      <LineChart fx:id="chart" legendSide="TOP" prefHeight="577.0" prefWidth="813.0">
+      <LineChart fx:id="chart" createSymbols="false" legendSide="TOP" prefHeight="577.0" prefWidth="813.0">
         <xAxis>
-          <NumberAxis fx:id="iterationFrequencyAxis" autoRanging="false" label="Iteration" lowerBound="1.0" minorTickCount="0" side="BOTTOM" tickUnit="1.0" upperBound="12.0" />
+          <NumberAxis fx:id="iterationFrequencyAxis" autoRanging="false" forceZeroInRange="false" label="Iteration" lowerBound="1.0" minorTickCount="0" side="BOTTOM" tickUnit="1.0" upperBound="12.0" />
         </xAxis>
         <yAxis>
-          <NumberAxis fx:id="frequencyAxis" label="Frequency" side="LEFT" tickUnit="1.0" upperBound="60.0" />
+          <NumberAxis fx:id="frequencyAxis" forceZeroInRange="false" label="Frequency" minorTickCount="0" side="LEFT" tickUnit="1.0" upperBound="55.0" />
         </yAxis>
       </LineChart>
    </children>

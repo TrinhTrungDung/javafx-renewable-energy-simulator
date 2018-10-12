@@ -66,6 +66,14 @@ public class StatisticsViewController implements Initializable {
 	
 	@FXML
 	void onNextButtonClicked(ActionEvent event) {
+		if (iteration >= 12) {
+			
+		}
+		
+		for (AbstractComponent consumer : control.getConsumers()) {
+			consumer.next();
+		}
+		
 		control.nextIteration();
 		iteration++;
 		updateUI();
@@ -81,6 +89,7 @@ public class StatisticsViewController implements Initializable {
 			switch (selectedButton.getText()) {
 				case "Frequency":
 					chartScene = loadChart("FrequencyChartView.fxml");
+					chartScene.getStylesheets().add(getClass().getResource("frequencyChart.css").toExternalForm());
 					break;
 				case "Demand-Supply":
 					chartScene = loadChart("DemandSupplyChartView.fxml");

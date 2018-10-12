@@ -28,16 +28,6 @@ public class Main extends Application {
     	
     	primaryStage.setScene(scene);
     	primaryStage.show();
-////    	
-////    	root.setStyle("-fx-padding: 10;" + 
-////    			"-fx-border-style: solid inside;" +
-////    			"-fx-border-width: 2;" +
-////    			"-fx-border-insets: 5;" +
-////    			"-fx-border-radius: 5;" +
-////    			"-fx-border-color: blue;");
-////    	
-////    	Scene scene = new Scene(root);
-////    	scene.getStylesheets().add(getClass().getResource("linechart.css").toExternalForm());
     }
 
     public static void main(String[] args) {
