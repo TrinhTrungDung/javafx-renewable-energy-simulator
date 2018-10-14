@@ -7,7 +7,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DemandSupplyChartController">
    <children>
-      <BarChart fx:id="demandSupplyChart" legendSide="RIGHT">
+      <BarChart fx:id="demandSupplyChart" legendSide="RIGHT" title="Demand-Supply Change over iteration">
         <xAxis>
           <CategoryAxis fx:id="iterationDemandSupplyAxis" label="Iteration" side="BOTTOM" />
         </xAxis>

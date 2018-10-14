@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.input.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -8,7 +10,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
    <children>
-      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0">
+      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="543.0">
          <top>
             <MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
               <menus>
@@ -28,61 +30,152 @@
             </MenuBar>
          </top>
          <bottom>
-            <Button fx:id="resultButton" mnemonicParsing="false" onAction="#onResultButtonClicked" text="Result" BorderPane.alignment="CENTER" />
+            <Button fx:id="resultButton" mnemonicParsing="false" onAction="#onResultButtonClicked" text="Result" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </BorderPane.margin></Button>
          </bottom>
          <center>
-            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <GridPane alignment="TOP_CENTER" prefHeight="278.0" prefWidth="403.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="63.0" prefWidth="202.0" text="Consumer">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="30.0" prefHeight="63.0" prefWidth="202.0" text="Generator" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </Label>
+                  <VBox prefHeight="200.0" prefWidth="273.0" GridPane.rowIndex="1">
                      <children>
-                        <Label text="Consumer" />
-                        <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity">
+                        <GridPane prefHeight="125.0" prefWidth="272.0">
                            <children>
-                              <Label text="Size:" />
-                              <TextField fx:id="consumerSize" promptText="Size" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="101.0" text="Size:">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </Label>
+                              <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="7.0" prefHeight="40.0" prefWidth="128.0" text="Average Power:" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </Label>
+                              <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="7.0" prefHeight="40.0" prefWidth="144.0" text="Standard Deviation:" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </Label>
+                              <TextField fx:id="consumerSize" alignment="CENTER" prefHeight="22.0" prefWidth="96.0" promptText="Size" GridPane.columnIndex="1" />
+                              <TextField fx:id="consumerAvgPower" alignment="CENTER" prefHeight="24.0" prefWidth="96.0" promptText="Average" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="consumerStd" alignment="CENTER" prefHeight="27.0" prefWidth="96.0" promptText="Deviation" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1" />
                            </children>
-                        </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0">
-                           <children>
-                              <Label text="Average Power:" />
-                              <TextField fx:id="consumerAvgPower" promptText="Average" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="98.0">
-                           <children>
-                              <Label text="Standard Deviation:" />
-                              <TextField fx:id="consumerStd" />
-                           </children>
-                        </HBox>
-                        <Button fx:id="submitConsumer" mnemonicParsing="false" onAction="#onSubmitConsumerClicked" text="Submit" />
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="10.0" prefWidth="144.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="10.0" prefWidth="58.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                        <Button fx:id="submitConsumer" alignment="CENTER" mnemonicParsing="false" onAction="#onSubmitConsumerClicked" text="Submit">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="100.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Button>
                      </children>
                   </VBox>
-                  <VBox layoutX="10.0" layoutY="10.0">
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Label text="Generator" />
-                        <HBox>
+                        <GridPane prefHeight="122.0" prefWidth="251.0">
                            <children>
-                              <Label prefHeight="17.0" prefWidth="110.0" text="Size:" />
-                              <TextField fx:id="generatorSize" promptText="Size" />
+                              <Label alignment="TOP_CENTER" contentDisplay="RIGHT" prefHeight="40.0" prefWidth="147.0" text="Size:">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </Label>
+                              <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="7.0" prefHeight="40.0" prefWidth="150.0" text="Total Power:" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </Label>
+                              <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="7.0" prefHeight="40.0" prefWidth="144.0" text="Start Power:" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </Label>
+                              <TextField fx:id="generatorSize" alignment="CENTER" prefHeight="48.0" prefWidth="95.0" promptText="Size" GridPane.columnIndex="1">
+                                 <GridPane.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <TextField fx:id="generatorTotalPower" alignment="CENTER" prefHeight="46.0" prefWidth="95.0" promptText="Total" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <TextField fx:id="generatorStartPower" alignment="CENTER" promptText="Start Power" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </GridPane.margin>
+                              </TextField>
                            </children>
-                        </HBox>
-                        <HBox layoutX="10.0" layoutY="10.0">
-                           <children>
-                              <Label prefHeight="17.0" prefWidth="110.0" text="Total Power:" />
-                              <TextField fx:id="generatorTotalPower" promptText="Total" />
-                           </children>
-                        </HBox>
-                        <HBox layoutX="10.0" layoutY="98.0">
-                           <children>
-                              <Label prefHeight="17.0" prefWidth="110.0" text="Start Power:" />
-                              <TextField fx:id="generatorStartPower" promptText="Power" />
-                           </children>
-                        </HBox>
-                        <Button fx:id="submitGenerator" mnemonicParsing="false" onAction="#onSubmitGeneratorClicked" text="Submit" />
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="10.0" prefWidth="118.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="110.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                        <Button fx:id="submitGenerator" mnemonicParsing="false" onAction="#onSubmitGeneratorClicked" prefHeight="25.0" prefWidth="54.0" text="Submit">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="100.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Button>
                      </children>
                   </VBox>
                </children>
-            </HBox>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="186.0" minHeight="10.0" prefHeight="153.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
          </center>
       </BorderPane>
    </children>

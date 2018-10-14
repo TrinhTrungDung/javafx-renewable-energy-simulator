@@ -79,42 +79,54 @@ public class MainViewController implements Initializable {
     
     @FXML
     public void onSubmitConsumerClicked(ActionEvent event) throws IOException {
-    	Integer amount = Integer.parseInt(consumerSize.getText().trim());
-    	Integer avgPower = Integer.parseInt(consumerAvgPower.getText());
-    	Integer std = Integer.parseInt(consumerStd.getText());
+    	Integer amount, avgPower, std;
     	
-    	List<AbstractComponent> consumers = ConsumerFactory.generate(amount, avgPower, std);
-    	DataUtils.addConsumers(control, consumers);
-    	DataUtils.generateConsumers(control.getConsumers());
-    	
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsumersView.fxml"));
-    	Parent consumersViewParent = loader.load();
-		Scene consumersViewScene = new Scene(consumersViewParent);
-		
-		Stage stage = (Stage) menuBar.getScene().getWindow();
-		stage.setScene(consumersViewScene);
-		stage.setTitle("Consumers");
-		stage.show();
+    	try {
+    		amount = Integer.parseInt(consumerSize.getText().trim());
+        	avgPower = Integer.parseInt(consumerAvgPower.getText());
+        	std = Integer.parseInt(consumerStd.getText());
+        	
+        	List<AbstractComponent> consumers = ConsumerFactory.generate(amount, avgPower, std);
+        	DataUtils.addConsumers(control, consumers);
+        	DataUtils.generateConsumers(control.getConsumers());
+        	
+        	FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsumersView.fxml"));
+        	Parent consumersViewParent = loader.load();
+    		Scene consumersViewScene = new Scene(consumersViewParent);
+    		
+    		Stage stage = (Stage) menuBar.getScene().getWindow();
+    		stage.setScene(consumersViewScene);
+    		stage.setTitle("Consumers");
+    		stage.show();
+    	} catch (NumberFormatException nfe) {
+			AlertDialog.display("Missing Number", "You must perform inputting number!!!");
+		}
     }
     
     @FXML
     public void onSubmitGeneratorClicked(ActionEvent event) throws IOException {
-    	Integer amount = Integer.parseInt(generatorSize.getText().trim());
-    	Double totalPower = Double.parseDouble(generatorTotalPower.getText());
-    	Double startPower = Double.parseDouble(generatorStartPower.getText());
+    	Integer amount;
+    	Double totalPower, startPower;
     	
-    	List<AbstractComponent> generators = GeneratorFactory.generate(amount, totalPower, startPower);
-    	DataUtils.addGenerators(control, generators);
-    	DataUtils.generateGenerators(control.getGenerators());
-    	
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("GeneratorsView.fxml"));
-    	Parent generatorsViewParent = loader.load();
-		Scene generatorsViewScene = new Scene(generatorsViewParent);
-		
-		Stage stage = (Stage) menuBar.getScene().getWindow();
-		stage.setScene(generatorsViewScene);
-		stage.setTitle("Generators");
-		stage.show();
+    	try {
+    		amount = Integer.parseInt(generatorSize.getText().trim());
+        	totalPower = Double.parseDouble(generatorTotalPower.getText());
+        	startPower = Double.parseDouble(generatorStartPower.getText());
+    		List<AbstractComponent> generators = GeneratorFactory.generate(amount, totalPower, startPower);
+        	DataUtils.addGenerators(control, generators);
+        	DataUtils.generateGenerators(control.getGenerators());
+        	
+        	FXMLLoader loader = new FXMLLoader(getClass().getResource("GeneratorsView.fxml"));
+        	Parent generatorsViewParent = loader.load();
+    		Scene generatorsViewScene = new Scene(generatorsViewParent);
+    		
+    		Stage stage = (Stage) menuBar.getScene().getWindow();
+    		stage.setScene(generatorsViewScene);
+    		stage.setTitle("Generators");
+    		stage.show();
+    	} catch (NumberFormatException nfe) {
+			AlertDialog.display("Missing Number", "You must perform inputting number!!!");
+		}
     }
     
     @FXML

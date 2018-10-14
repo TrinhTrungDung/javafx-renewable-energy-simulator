@@ -7,7 +7,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CostProfitChartController">
    <children>
-      <BarChart fx:id="costProfitChart">
+      <BarChart fx:id="costProfitChart" title="Cost-Profit Change over iteration">
         <xAxis>
           <CategoryAxis fx:id="iterationCostProfitAxis" label="Iteration" side="BOTTOM" />
         </xAxis>

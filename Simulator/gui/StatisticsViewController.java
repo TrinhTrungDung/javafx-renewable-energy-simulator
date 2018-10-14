@@ -66,22 +66,24 @@ public class StatisticsViewController implements Initializable {
 	
 	@FXML
 	void onNextButtonClicked(ActionEvent event) {
-		if (iteration >= 12) {
+		try {
+			for (AbstractComponent consumer : control.getConsumers()) {
+				consumer.next();
+			}
 			
+			control.nextIteration();
+			iteration++;
+			updateUI();
+		} catch (ArrayIndexOutOfBoundsException indexException) {
+			AlertDialog.display("Iteration limit", "You cannot perform over 12 iterations!!");
 		}
-		
-		for (AbstractComponent consumer : control.getConsumers()) {
-			consumer.next();
-		}
-		
-		control.nextIteration();
-		iteration++;
-		updateUI();
 	}
 	
 	@FXML
 	void onShowChartButtonClicked(ActionEvent event) throws IOException {
 		Scene chartScene = null;
+		Stage stage = new Stage();
+		stage.initModality(Modality.APPLICATION_MODAL);
 		
 		if (group.getSelectedToggle() != null) {
 			RadioButton selectedButton = (RadioButton) group.getSelectedToggle();
@@ -90,22 +92,22 @@ public class StatisticsViewController implements Initializable {
 				case "Frequency":
 					chartScene = loadChart("FrequencyChartView.fxml");
 					chartScene.getStylesheets().add(getClass().getResource("frequencyChart.css").toExternalForm());
+					stage.setTitle("Frequency Chart");
 					break;
 				case "Demand-Supply":
 					chartScene = loadChart("DemandSupplyChartView.fxml");
+					stage.setTitle("Demand-Supply Chart");
 					break;
 				case "Cost-Profit":
 					chartScene = loadChart("CostProfitChartView.fxml");
+					stage.setTitle("Revenue Chart");
 					break;
 				default:
 					break;
 			}
 		}
 		
-		Stage stage = new Stage();
-		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.setScene(chartScene);
-		stage.setTitle("");
 		stage.showAndWait();
 	}
 	

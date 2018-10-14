@@ -94,22 +94,32 @@ public class GeneratorsViewController implements Initializable {
     
     @FXML
     public void onAddConsumerClicked(ActionEvent event) {
-    	String name = nameInput.getText();
-    	Double maxPower = Double.parseDouble(maxPowerInput.getText());
-    	Double minPower = Double.parseDouble(minPowerInput.getText());
-    	Double maxChange = Double.parseDouble(maxChangeInput.getText());
-    	Double minChange = Double.parseDouble(minChangeInput.getText());
+    	String name;
+    	Double maxPower, minPower, maxChange, minChange;
     	
-    	AbstractComponent component = ConsumerFactory.generate(name, maxPower, minPower, maxChange, minChange);
-    	table.getItems().add(component);
+    	try {
+    		name = nameInput.getText().trim();
+    		if (name.equals("")) {
+    			AlertDialog.display("Missing name", "You must enter consumer's name!");
+    		}
+    		maxPower = Double.parseDouble(maxPowerInput.getText());
+        	minPower = Double.parseDouble(minPowerInput.getText());
+        	maxChange = Double.parseDouble(maxChangeInput.getText());
+        	minChange = Double.parseDouble(minChangeInput.getText());
     	
-    	nameInput.clear();
-    	maxPowerInput.clear();
-    	minPowerInput.clear();
-    	maxChangeInput.clear();
-    	minChangeInput.clear();
-    	
-    	numOfGenerators.setText("Total: " + table.getItems().size());
+	    	AbstractComponent component = ConsumerFactory.generate(name, maxPower, minPower, maxChange, minChange);
+	    	table.getItems().add(component);
+	    	
+	    	nameInput.clear();
+	    	maxPowerInput.clear();
+	    	minPowerInput.clear();
+	    	maxChangeInput.clear();
+	    	minChangeInput.clear();
+	    	
+	    	numOfGenerators.setText("Total: " + table.getItems().size());
+    	} catch (NumberFormatException e) {
+    		AlertDialog.display("Missing number", "You must perform inputting number!!!");
+		}
     }
     
     @FXML
@@ -132,7 +142,7 @@ public class GeneratorsViewController implements Initializable {
 		Scene mainScene = new Scene(mainParent);
 		Stage stage = (Stage) menuBar.getScene().getWindow();
 		stage.setScene(mainScene);
-		stage.setTitle("");
+		stage.setTitle("Main");
 		stage.show();
     }
 
