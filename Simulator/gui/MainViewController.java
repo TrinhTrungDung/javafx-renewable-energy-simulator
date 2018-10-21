@@ -2,6 +2,9 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -130,22 +133,30 @@ public class MainViewController implements Initializable {
     }
     
     @FXML
-    public void onResultButtonClicked(ActionEvent event) throws IOException {
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("StatisticsView.fxml"));
-    	Parent statisticsViewParent = loader.load();
-		Scene statisticsViewScene = new Scene(statisticsViewParent);
-		
-		Stage stage = new Stage();
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			@Override
-			public void handle(WindowEvent event) {
-				StatisticsViewController.resetIteration();
-			}
-		});
-		stage.setScene(statisticsViewScene);
-		stage.setTitle("Statistics");
-		stage.showAndWait();
+    public void onResultButtonClicked(ActionEvent event) throws Exception {
+    	Path consumersFilePath = Paths.get("consumers.csv");
+    	Path generatorsFilePath = Paths.get("generators.csv");
+    	
+    	if (Files.exists(consumersFilePath) && Files.exists(generatorsFilePath)) {
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("StatisticsView.fxml"));
+        	Parent statisticsViewParent = loader.load();
+    		Scene statisticsViewScene = new Scene(statisticsViewParent);
+    		
+    		Stage stage = new Stage();
+    		stage.initModality(Modality.APPLICATION_MODAL);
+    		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+    			@Override
+    			public void handle(WindowEvent event) {
+    				StatisticsViewController.resetIteration();
+    			}
+    		});
+    		
+    		stage.setScene(statisticsViewScene);
+    		stage.setTitle("Statistics");
+    		stage.showAndWait();
+    	} else {
+    		AlertDialog.display("Missing file", "You must provide information before seeing its result!");
+    	}
     }
 
 	@Override
