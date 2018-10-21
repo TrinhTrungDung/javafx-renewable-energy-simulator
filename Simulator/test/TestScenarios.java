@@ -35,7 +35,7 @@ class TestScenarios {
 
 		double totalCost=0;
 		double totalProfit=0;
-		for(int i = 0; i < 11; i++) {
+		for(int i = 0; i < 12; i++) {
 			totalProfit+=control.getProfit();
 			totalCost+=control.getCost();
 			System.out.println("Frequency: "+control.getFrequency()+"Hz Demand: "+control.getTotalDemand()+"W  Supply: "+control.getTotalSupply()+"W");

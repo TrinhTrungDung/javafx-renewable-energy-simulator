@@ -67,13 +67,17 @@ public class StatisticsViewController implements Initializable {
 	@FXML
 	void onNextButtonClicked(ActionEvent event) {
 		try {
-			for (AbstractComponent consumer : control.getConsumers()) {
-				consumer.next();
+			if (iteration >= 12) {
+				AlertDialog.display("Iteration limit", "You cannot perform over 12 iterations!!");
+			} else {
+				for (AbstractComponent consumer : control.getConsumers()) {
+					consumer.next();
+				}
+				
+				control.nextIteration();
+				iteration++;
+				updateUI();
 			}
-			
-			control.nextIteration();
-			iteration++;
-			updateUI();
 		} catch (ArrayIndexOutOfBoundsException indexException) {
 			AlertDialog.display("Iteration limit", "You cannot perform over 12 iterations!!");
 		}

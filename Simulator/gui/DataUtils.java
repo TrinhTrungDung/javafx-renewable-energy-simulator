@@ -118,8 +118,13 @@ public class DataUtils {
 		XYChart.Series<Number, Number> frequencySeries = new XYChart.Series<Number, Number>();
 		frequencySeries.setName("Frequency");
 		
-		for (int i = 1; i <= iteration; i++) {
-			frequencySeries.getData().add(new XYChart.Data<>(i, control.getFrequency()));
+		for (int i = 0; i < iteration; i++) {
+			frequencySeries.getData().add(new XYChart.Data<>(i + 1, control.getFrequency()));
+			
+			for (AbstractComponent consumer : control.getConsumers()) {
+				consumer.next();
+			}
+			
 			control.nextIteration();
 		}
 		
@@ -140,6 +145,11 @@ public class DataUtils {
 		for (int i = 1; i <= iteration; i++) {
 			demandSeries.getData().add(new XYChart.Data<>(String.valueOf(i), control.getTotalDemand()));
 			supplySeries.getData().add(new XYChart.Data<>(String.valueOf(i), control.getTotalSupply()));
+			
+			for (AbstractComponent consumer : control.getConsumers()) {
+				consumer.next();
+			}
+			
 			control.nextIteration();
 		}
 		
@@ -159,6 +169,11 @@ public class DataUtils {
 		for (int i = 1; i <= iteration; i++) {
 			costSeries.getData().add(new XYChart.Data<>(String.valueOf(i), control.getCost()));
 			profitSeries.getData().add(new XYChart.Data<>(String.valueOf(i), control.getProfit()));
+			
+			for (AbstractComponent consumer : control.getConsumers()) {
+				consumer.next();
+			}
+			
 			control.nextIteration();
 		}
 		

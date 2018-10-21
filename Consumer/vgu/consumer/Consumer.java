@@ -28,7 +28,6 @@ public class Consumer extends AbstractComponent {
 		this.runTime = runTime;
 		this.power = minPower;
 		this.price = new Price(this);
-		next();
 	}
 	
 	public String getName() {

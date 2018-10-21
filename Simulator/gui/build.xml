@@ -2,8 +2,8 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>C:\Users\DungTrinhTrung\Desktop\simulator.jar</jar>
-  <outfile>C:\Users\DungTrinhTrung\Desktop\simulator.exe</outfile>
+  <jar>C:\Users\DungTrinhTrung\Desktop\simulator-deployment\simulator.jar</jar>
+  <outfile>C:\Users\DungTrinhTrung\Desktop\simulator-deployment\simulator.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
   <chdir>.</chdir>
@@ -14,10 +14,6 @@
   <restartOnCrash>false</restartOnCrash>
   <manifest></manifest>
   <icon></icon>
-  <classPath>
-    <mainClass>gui.Main</mainClass>
-    <cp>gui.Main</cp>
-  </classPath>
   <jre>
     <path></path>
     <bundledJre64Bit>false</bundledJre64Bit>
